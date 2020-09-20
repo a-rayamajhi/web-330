@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Assignment 7.4 – Other Bindings</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <!-- CSS only -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript Libraries -->
+    <!-- <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script> -->
+    <script src="../knockout-3.5.0.min.js"></script>
+    <style>
+      .highlight {
+        background-color: #191919;
+      }
+      .highlight:hover {
+        background-color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div role="main" class="container">
+      <br /><br />
+      <h2>Assignment 7.4 – Other Bindings</h2>
+      <div>
+        <small>Text binding Link is highlighted to use css binding</small>
+      </div>
+      <br />
+      <br />
+      <table class="table table-dark table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Link</th>
+          </tr>
+        </thead>
+        <tbody data-bind="foreach: tutorials">
+          <tr>
+            <td data-bind="text: title"></td>
+            <td data-bind="text: description"></td>
+            <td>
+              <a data-bind="attr: {href:url, title: title}" target="_blank"
+                ><button
+                  type="button"
+                  class="btn btn-dark"
+                  data-bind="css: {highlight: isTextBind }, style: {padding: '.375rem .75rem .6rem .9rem'}"
+                >
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    class="bi bi-box-arrow-up-right"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"
+                    />
+                  </svg>
+                </button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+    </div>
+    <script>
+      // Constructor function
+      function Tutorial(title, description, url, isTextBind = false) {
+        this.title = title;
+        this.description = truncate(description);
+        this.url = url;
+        this.isTextBind = isTextBind;
+      }
+
+      function truncate(text) {
+        return text.length > 50 ? `${text.substring(0, 47)}...` : text;
+      }
+
+      function TutorialViewModel() {
+        // OBSERVABLE ARRAY
+        this.tutorials = ko.observableArray([
+          new Tutorial(
+            "The Visible binding",
+            "The visible and hidden bindings cause the associated DOM element to become hidden or visible according to the value you pass to the binding.",
+            "https://knockoutjs.com/documentation/visible-binding.html"
+          ),
+          new Tutorial(
+            "The text binding",
+            "The text binding causes the associated DOM element to display the text value of your parameter.",
+            "https://knockoutjs.com/documentation/text-binding.html",
+            true
+          ),
+          new Tutorial(
+            "The html binding",
+            "The html binding causes the associated DOM element to display the HTML specified by your parameter",
+            "https://knockoutjs.com/documentation/computedObservables.html"
+          ),
+          new Tutorial(
+            "The css binding",
+
+            "The css bindings add or remove one or more named CSS classes to the associated DOM element. ",
+            "https://knockoutjs.com/documentation/css-binding.html"
+          ),
+          new Tutorial(
+            "The attr binding",
+            "The attr binding provides a generic way to set the value of any attribute for the associated DOM element.",
+            "https://knockoutjs.com/documentation/attr-binding.html"
+          ),
+        ]);
+      }
+      // KO bindings.
+      ko.applyBindings(new TutorialViewModel());
+    </script>
+  </body>
+</html>

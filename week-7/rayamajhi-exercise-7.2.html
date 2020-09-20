@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Exercise 7.2 – The "if" Binding</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <!-- CSS only -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript Libraries -->
+    <!-- <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script> -->
+    <script src="../knockout-3.5.0.min.js"></script>
+  </head>
+  <body>
+    <div role="main" class="container">
+      <br /><br />
+      <h2>Exercise 7.2 – The "if" Binding</h2>
+      <div class="form-group">
+        <label for="firstName">First Name: </label>
+        <input
+          type="text"
+          data-bind="value: firstName"
+          class="form-control alert-primary"
+          id="txtName"
+        />
+      </div>
+      <div data-bind="if: displayLastName">
+        <div class="form-group">
+          <label for="lastName">Last Name: </label>
+          <input
+            type="text"
+            data-bind="value: lastName"
+            class="form-control alert-primary"
+            id="txtAuthor"
+          />
+        </div>
+      </div>
+      <br />
+      <div data-bind="if: lastName">
+        <h2>
+          <span
+            id="bookOutput"
+            class="alert-success"
+            data-bind="text:
+            fullName"
+          ></span>
+        </h2>
+      </div>
+      <br />
+    </div>
+    <script>
+      function PersonViewModel() {
+        this.firstName = ko.observable("");
+        this.lastName = ko.observable("");
+        this.displayLastName = ko.pureComputed(function () {
+          if (this.firstName()) {
+            return this.firstName();
+          }
+          this.firstName("");
+          this.lastName("");
+          return;
+        }, this);
+        this.fullName = ko.pureComputed(function () {
+          return this.firstName() + " " + this.lastName();
+        }, this);
+      }
+      ko.applyBindings(new PersonViewModel());
+    </script>
+  </body>
+</html>
